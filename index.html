@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Andrey de Moraes</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        /* --- ESTILOS GERAIS --- */
+        html { scroll-behavior: smooth; }
+        body { margin: 0; padding: 0; width: 100%; color: #fff; overflow-x: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        /* FAIXA NO TOPO */
+        .top-txt {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        .top-txt p { margin: 0; letter-spacing: 1px; }
+
+        .lang-switch { display: flex; gap: 8px; }
+        .lang-switch img { width: 20px; cursor: pointer; transition: 0.3s; }
+        .lang-switch img:hover { transform: scale(1.2); }
+
+        /* Controle de exibição de idiomas */
+        .lang-en { display: none; }
+
+        /* ARARA AZUL */
+        .arara-topo {
+            position: absolute;
+            top: 45px;
+            left: 30px;
+            width: 120px;
+            height: auto;
+            z-index: 100;
+            pointer-events: none;
+            animation: voar-arara 4s ease-in-out infinite;
+        }
+
+        @keyframes voar-arara {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(15px) rotate(-5deg) scale(1.05); }
+        }
+
+        /* LANDING SECTION */
+        #landing {
+            height: 100vh;
+            background: url("images/riodejaneiro.jpg") no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: background 0.5s ease-in-out;
+        }   
+
+        /* NOME EM SVG */
+        .svg-wrapper {
+            position: relative;
+            width: 450px;
+            height: 80px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shape {
+            stroke-dasharray: 140 540;
+            stroke-dashoffset: -474;
+            stroke-width: 10px;
+            fill: transparent;
+            stroke: #89d7dc;
+            transition: all 1s ease;
+        }
+
+        .text {
+            font-family: 'Josefin Slab', serif;
+            font-size: 32px;
+            letter-spacing: 5px;
+            fill: #000;
+            font-weight: bold;
+        }
+
+        .svg-wrapper:hover .shape {
+            stroke-width: 2px;
+            stroke-dashoffset: 0;
+            stroke-dasharray: 1060;
+        }
+
+        /* FLECHA DE SCROLL */
+        .scroll-arrow {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 45px;
+            color: #000;
+            text-decoration: none;
+            z-index: 20;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-15px); }
+            60% { transform: translateX(-50%) translateY(-7px); }
+        }
+
+        /* PORTFOLIO SECTION (UNDERWATER) */
+        #portfolio {
+            background: url("images/underwater1.jpg") no-repeat center center/cover;
+            min-height: 100vh;
+            position: relative;
+            transition: background 0.5s ease-in-out;
+        }
+
+        #port-wrapper {
+            width: 100%; 
+            min-height: 100vh;
+            background: rgba(0,0,0,0.7);
+            padding: 60px 0;
+            position: relative;
+        }
+
+        /* PACU */
+        .pacu-link { position: absolute; bottom: 20px; right: 30px; z-index: 100; text-decoration: none; }
+        .pacu-bottom { width: 150px; height: auto; opacity: 0.8; transition: 0.3s; animation: nadar-pacu 5s ease-in-out infinite; }
+        .pacu-link:hover .pacu-bottom { opacity: 1; filter: brightness(1.2); transform: scale(1.1); }
+
+        @keyframes nadar-pacu {
+            0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+            50% { transform: translateX(-30px) translateY(-15px) rotate(-8deg); }
+        }
+
+        /* NAVEGAÇÃO */
+        .text-2 { text-align: center; margin-bottom: 40px; position: relative; z-index: 10; }
+        .nav-btn { color: #fff; text-decoration: none; display: inline-block; padding: 10px 25px; transition: 0.3s; border-radius: 5px; }
+        .nav-btn h2 { font-family: 'Josefin Slab', serif; font-size: 24px; margin: 0; }
+        .nav-btn:hover { background: rgba(25, 246, 232, 0.2); }
+
+        /* CONTEÚDO DAS ABAS */
+        .content {
+            margin: 0 auto;
+            max-width: 750px;
+            display: none;
+            animation: fadeIn 0.6s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 10;
+        }
+        #text-changer-1:target, #text-changer-2:target, #text-changer-3:target { display: block; }
+
+        .profile-img { float: left; margin: 0 25px 15px 0; border-radius: 50%; border: 3px solid #19f6e8; width: 120px; height: 120px; object-fit: cover; }
+
+        .row { display: flex; flex-direction: row; justify-content: center; gap: 25px; flex-wrap: nowrap; }
+        .project-box { width: 150px; text-align: center; font-size: 14px; }
+        .project { height: 110px; width: 100%; border: 2px solid #19f6e8; margin-top: 10px; transition: 0.4s; cursor: pointer; }
+        .project:hover { background: rgba(25, 246, 232, 0.2); transform: scale(1.05); }
+
+        .social { text-align: center; }
+        .social a { margin: 0 15px; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .fa { color: #fff; }
+        .fa:hover { color: #19f6e8; transform: translateY(-5px); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .svg-wrapper { width: 320px; height: 60px; }
+            .svg-wrapper svg { width: 320px; height: 60px; }
+            .text { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="top-txt">
+        <img src="images/arara.png" alt="Arara Azul" class="arara-topo" id="arara-img">
+        
+        <p class="lang-pt">Em breve, melhorias</p>
+        <p class="lang-en">Improvements coming soon</p>
+
+        <div class="lang-switch">
+            <img src="https://flagcdn.com/w20/br.png" alt="PT" onclick="changeLang('pt')">
+            <img src="https://flagcdn.com/w20/us.png" alt="EN" onclick="changeLang('en')">
+        </div>
+    </section>
+
+    <header id="landing">
+        <div class="svg-wrapper">
+            <a href="#portfolio" style="text-decoration: none;">
+                <svg height="80" width="450" xmlns="http://www.w3.org/2000/svg">
+                    <rect class="shape" height="80" width="450" />
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" class="text">
+                        Andrey de Moraes
+                    </text>
+                </svg>
+            </a>
+        </div>
+        <a href="#portfolio" class="scroll-arrow">
+            <i class="fa fa-angle-down"></i>
+        </a>
+    </header>
+
+    <main id="portfolio">
+        <div id="port-wrapper">
+            
+            <nav class="text-2">
+                <a href="#text-changer-1" class="nav-btn">
+                    <h2>
+                        <span class="lang-pt">Sobre Mim</span>
+                        <span class="lang-en">About Me</span>
+                    </h2>
+                </a>
+                <a href="#text-changer-2" class="nav-btn">
+                    <h2>
+                        <span class="lang-pt">Projetos</span>
+                        <span class="lang-en">Projects</span>
+                    </h2>
+                </a>
+                <a href="#text-changer-3" class="nav-btn">
+                    <h2>
+                        <span class="lang-pt">Contatos</span>
+                        <span class="lang-en">Contacts</span>
+                    </h2>
+                </a>
+            </nav>
+
+            <section id="text-changer-1" class="content">
+                <img src="images/person.jpg" alt="Andrey" class="profile-img" />
+                
+                <div class="lang-pt">
+                    <p> 
+                        Olá! Sou o <strong>Andrey</strong>, moro no Brasil e curso Engenharia da Computação na UNIVESP. 
+                        <br><br>
+                        Atualmente, sou estagiário de Infraestrutura de TI na <strong>Agility Networks</strong>, onde tenho a oportunidade de aprender e atuar com tecnologias de alto nível, como Palo Alto, F5 e CyberArk.
+                        <br><br>
+                        Minhas linguagens favoritas são <strong>Python e C</strong> (mesmo que eu ainda esteja no processo de aprendizado). No tempo livre, gosto de "quebrar a cabeça" resolvendo CTFs (Capture The Flag) no <em>TryHackMe</em>.
+                        <br><br>
+                        Tenho me envolvido em projetos de hackathons para aprender tudo que for necessário. Sempre me esforço para aprender, seja utilizando YouTube, Google ou IA — eu sempre tento chegar a uma solução.
+                        <br><br>
+                        Também tenho alguns hobbies: desenhar (acho que faço umas artes legais!), programar, ouvir música e jogar videogame. Meus favoritos são <strong>The Legend of Zelda</strong> (Ocarina of Time e Breath of the Wild), Super Mario 3D Land e Pokémon Legends: Arceus.
+                        <br><br>
+                        Atualmente jogo bastante no meu 3DS e Nintendo Switch <strong>(Friend Code: SW-2452-3295-9712)</strong>.
+                    </p>
+                </div>
+
+                <div class="lang-en">
+                    <p> 
+                        Hi! I'm <strong>Andrey</strong>, I live in Brazil and I'm a Computer Engineering student at UNIVESP. 
+                        <br><br>
+                        Currently, I am an IT Infrastructure Intern at <strong>Agility Networks</strong>, where I work with high-level technologies like Palo Alto, F5, and CyberArk.
+                        <br><br>
+                        My favorite languages are <strong>Python and C</strong>. In my free time, I enjoy solving CTFs on <em>TryHackMe</em>.
+                        <br><br>
+                        I participate in hackathons to keep learning. I always push myself to find solutions using YouTube, Google, or AI.
+                        <br><br>
+                        I also have some hobbies: drawing, coding, listening to music, and gaming. My favorites are <strong>The Legend of Zelda</strong>, Super Mario 3D Land, and Pokémon Legends: Arceus.
+                        <br><br>
+                        I'm currently playing a lot on my 3DS and Nintendo Switch <strong>(Friend Code: SW-2452-3295-9712)</strong>.
+                    </p>
+                </div>
+            </section>
+
+            <section id="text-changer-2" class="content">
+                <div class="row">
+                    <div class="project-box">
+                        <span class="lang-pt">Cyber Labs Write-Ups</span>
+                        <span class="lang-en">Cyber Labs Write-Ups</span>
+                        <a href="https://github.com/andreymsdev/Cyber-Labs-Writeups/blob/main/README.md" target="_blank">
+                            <div class="project" style="background-image: url('images/pc.jpg'); background-size: cover; background-position: center;"></div>
+                        </a>
+                    </div>                    
+                    
+                    <div class="project-box">
+                        <span class="lang-pt">Jornada Acadêmica</span>
+                        <span class="lang-en">Academic Journey</span>
+                        <a href="https://github.com/andreymsdev/academic-journey-comp-eng" target="_blank">
+                            <div class="project" style="background-image: url('images/notebook.jpg'); background-size: cover; background-position: center;"></div>
+                        </a>
+                    </div>
+
+                    <div class="project-box">
+                        Net Tracer
+                        <a href="https://github.com/andreymsdev/NetTracer-Network-Diagnostic-Tool" target="_blank">
+                            <div class="project" style="background-image: url('images/nettracer.png'); background-size: cover; background-position: center;"></div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="text-changer-3" class="content">
+                <div class="social">
+                    <p style="margin-bottom: 25px;">
+                        <span class="lang-pt">Conecte-se comigo nas redes:</span>
+                        <span class="lang-en">Connect with me on social media:</span>
+                    </p>
+                    <a href="https://www.linkedin.com/in/andrey-ms/" target="_blank" title="LinkedIn"><i class="fa fa-linkedin fa-2x"></i></a>
+                    <a href="https://github.com/andreymsdev" target="_blank" title="GitHub"><i class="fa fa-github fa-2x"></i></a>
+                    <a href="mailto:andreym.professional@gmail.com" title="E-mail"><i class="fa fa-envelope fa-2x"></i></a>
+                    <a href="https://medium.com/@andreymsdev" title="Medium"><i class="fa fa-medium fa-2x"></i></a>
+                    <a href="https://tryhackme.com/p/Tux10" target="_blank" title="TryHackMe"> <i class="fa fa-terminal fa-2x"></i></a>
+                </div>
+            </section>
+
+            <a href="https://backloggd.com/u/Tuxmitc1/" target="_blank" class="pacu-link" id="pacu-img">
+                <img src="images/pacu.png" alt="Peixe Pacu" class="pacu-bottom">
+            </a>
+
+        </div>
+    </main>
+
+    <script>
+        function changeLang(lang) {
+            const ptEls = document.querySelectorAll('.lang-pt');
+            const enEls = document.querySelectorAll('.lang-en');
+            const landing = document.getElementById('landing');
+            const portfolio = document.getElementById('portfolio');
+            
+            // Pegando a Arara e o Pacu
+            const arara = document.getElementById('arara-img');
+            const pacu = document.getElementById('pacu-img');
+
+            if (lang === 'en') {
+                ptEls.forEach(el => el.style.display = 'none');
+                enEls.forEach(el => el.style.display = 'inline-block');
+                
+                landing.style.backgroundImage = "url('images/usa2.jpg')"; 
+                portfolio.style.backgroundImage = "url('images/water.jpg')";
+
+                // Troca a Arara (ou tira)
+                arara.src = "images/mordecai.png"; // Coloque o nome da imagem dos EUA aqui
+                // arara.style.display = "none"; // Descomente esta linha se quiser só esconder
+
+                // Troca o Pacu (ou tira)
+                pacu.querySelector('img').src = "images/perch.png"; // Coloque o peixe/animal dos EUA aqui
+                // pacu.style.display = "none"; // Descomente esta linha se quiser só esconder
+
+            } else {
+                enEls.forEach(el => el.style.display = 'none');
+                ptEls.forEach(el => el.style.display = 'inline-block');
+                
+                landing.style.backgroundImage = "url('images/riodejaneiro.jpg')";
+                portfolio.style.backgroundImage = "url('images/underwater1.jpg')";
+
+                // Volta o original
+                arara.src = "images/arara.png";
+                arara.style.display = "block";
+
+                pacu.querySelector('img').src = "images/pacu.png";
+                pacu.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
